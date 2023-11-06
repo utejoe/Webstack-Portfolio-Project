@@ -52,7 +52,7 @@ ScrollReveal().reveal('.home-content p, .about-content', { origin: 'right' });
 
 /*################# typed js ######################*/
     const typed = new Typed('.multiple-text',{
-        strings: ['Software Engineer', 'Civil Engineer', 'Trader', 'Farmer', 'Building Designer (using Autocad and Revit)'],
+        strings: ['Software Engineer', 'Civil Engineer', 'Building Designer (using Autocad and Revit)'],
         typeSpeed: 100,
         backSpeed: 100,
         backDelay: 1000,
