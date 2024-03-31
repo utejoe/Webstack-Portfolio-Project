@@ -29,6 +29,7 @@ body {
 }
 
 section {
+    min-height: 100vh;
     padding: 10rem 9% 2rem;
 }
 
@@ -83,15 +84,14 @@ section {
 }
 
 .home-img img {
-    width: 100%;
-    max-width: 400px; /* Adjust maximum width as needed */
-    min-width: 200px; /* Set a minimum width to prevent it from becoming too small */
-    height: auto; /* Maintain aspect ratio */
+    width: 35vw;
     animation: floatImage 4s ease-in-out infinite;
 }
 .oval-image {
     border-radius: 50%;
 }
+
+
 
 @keyframes floatImage {
     0% {
@@ -175,9 +175,7 @@ span {
 }
 
 .about-img img {
-    width: 100%;
-    max-width: 400px; /* Adjust maximum width as needed */
-    height: auto; /* Maintain aspect ratio */
+    width: 35vw;
 }
 
 .heading {
@@ -209,9 +207,9 @@ span {
     align-items: stretch; /* Align items vertically and stretch them to equal heights */
     flex-wrap: wrap;
     gap: 2rem;
-}
-
-.services-container .services-box {
+  }
+  
+  .services-container .services-box {
     flex: 1 1 30rem;
     background: var(--second-bg-color);
     padding: 3rem 2rem 4rem;
@@ -222,14 +220,15 @@ span {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-}
+  }
+  
 
 .services-container .services-box:hover {
     border-color: var(--main-color);
     transform: scale(1.02);
 }
 
-.services-box i {
+.services-box i{
     font-size: 7rem;
     color: var(--main-color);
 }
@@ -332,23 +331,30 @@ span {
     margin-bottom: 1.5rem;
 }
 
+
 .contact {
     text-align: center;
     padding: 6rem 0;
-}
-
-.contact h2 {
+  }
+  
+  .contact h2 {
     margin-bottom: 3rem;
-}
-
-.contact form {
+  }
+  
+  .contact form {
     max-width: 70rem;
     margin: 1rem auto;
     margin-bottom: 3rem;
+  }
+  
+  .contact input {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
-
-.contact input,
-.contact textarea {
+  
+  .contact input,
+  .contact textarea {
     width: 100%;
     padding: 1.5rem;
     font-size: 1.6rem;
@@ -357,13 +363,13 @@ span {
     border: none;
     border-radius: 0.8rem;
     margin-bottom: 1rem;
-}
-
-.contact textarea {
+  }
+  
+  .contact textarea {
     resize: align;
-}
-
-.contact .btn {
+  }
+  
+  .contact .btn {
     display: inline-block;
     background-color: blueviolet;
     color: var(--text-color);
@@ -373,17 +379,17 @@ span {
     border: none;
     border-radius: 0.8rem;
     cursor: pointer;
-}
-
-.contact .btn:hover {
+  }
+  
+  .contact .btn:hover {
     background-color: blueviolet;
-}
+  }
 
-.contact-img img {
-    width: 100%;
-    max-width: 400px; /* Adjust maximum width as needed */
-    height: auto; /* Maintain aspect ratio */
+  .contact-img img {
+    width: 35vw;
 }
+  
+  
 
 .footer {
     display: flex;
@@ -417,6 +423,7 @@ span {
     color: white;
 }
 
+
 /* BREAKPOINTS */
 @media (max-width: 1200px) {
     html {
@@ -444,7 +451,7 @@ span {
     .contact {
         min-height: auto;
     }
-
+    
     .footer {
         padding: 2rem 3%;
     }
@@ -477,12 +484,12 @@ span {
         font-size: 2rem;
         margin: 3rem 0;
     }
+    
 }
 
 @media (max-width: 617px) {
     .portfolio-container {
-        justify-content: center;
-        gap: 2rem;
+        grid-template-columns: 1fr;
     }
 }
 
@@ -490,27 +497,15 @@ span {
     html {
         font-size: 50%;
     }
+
+    .contact form .input-box input {
+        width: 100%;
+    }
 }
 
 @media (max-width: 365px) {
-    .home-img img,
-    .about-img img,
-    .contact-img img {
-        max-width: 40%;
-    }
-
-    .footer {
-        flex-direction: column-reverse;
-    }
-
-    .footer p {
-        text-align: center;
-        margin-top: 2rem;
-    }
-
     .home-img img {
         width: 90vw;
-        max-width: none; /* Resetting max-width */
     }
 
     .about-img img {
