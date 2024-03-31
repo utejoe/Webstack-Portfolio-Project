@@ -203,7 +203,7 @@
     <!-- footer design -->
     <footer class="footer">
         <div class="footer-text">
-        <p>Copyright & Copy; 2023 by Utejoe | All Rights Reserved.</p>
+            <p>Copyright &copy; <span id="copyrightYear"></span> by Utejoe | All Rights Reserved.</p>
         </div>
 
         <div class="footer-iconTop">
@@ -223,5 +223,9 @@
     
 
 </body>
+
+<script>
+    document.getElementById("copyrightYear").innerText = new Date().getFullYear();
+  </script>
 
 </html>

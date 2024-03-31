@@ -388,13 +388,19 @@ span {
 
 
 .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     padding: 2rem 9%;
     background: var(--second-bg-color);
+    z-index: 100; /* Ensure the footer appears above other content */
 }
+
 
 .footer-text p {
     font-size: 1.6rem;
