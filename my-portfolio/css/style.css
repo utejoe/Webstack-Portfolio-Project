@@ -72,8 +72,9 @@ section {
 #menu-icon {
     font-size: 3.6rem;
     color: white;
-    display: none;
+    display: block;
     position: relative;
+    margin-right: 10rem;
     z-index: 2;
 } 
 
