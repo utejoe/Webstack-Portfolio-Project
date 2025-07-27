@@ -10,9 +10,9 @@ const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 
 const months = ['January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December'];
 
-const API_KEY = '8ff5fd7bff234edadb01c5141c463a08'; // <== Use /weather compatible key
+const API_KEY = '8ff5fd7bff234edadb01c5141c463a08';
 
-// Time
+// Clock & Date
 setInterval(() => {
   const time = new Date();
   const day = time.getDay();
@@ -27,13 +27,14 @@ setInterval(() => {
   dateEl.innerHTML = `${days[day]}, ${date} ${months[month]}`;
 }, 1000);
 
+// Get Weather
 getWeatherData();
 
 function getWeatherData() {
   navigator.geolocation.getCurrentPosition((pos) => {
     const { latitude, longitude } = pos.coords;
 
-    // Get current weather
+    // === Current Weather ===
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`)
       .then(res => res.json())
       .then(data => {
@@ -56,50 +57,52 @@ function getWeatherData() {
         `;
       });
 
-    // Get 5-day forecast
+    // === 5-Day Forecast ===
     fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`)
       .then(res => res.json())
       .then(data => {
         let forecastMap = {};
+        const today = moment().format('ddd');
 
-        // Group forecasts by day
-        data.list.forEach(forecast => {
-          const date = moment(forecast.dt_txt).format('ddd');
-          if (!forecastMap[date]) forecastMap[date] = [];
-          forecastMap[date].push(forecast);
+        // Group entries by day
+        data.list.forEach(item => {
+          const day = moment(item.dt_txt).format('ddd');
+          if (day === today) return; // Skip today's data
+
+          if (!forecastMap[day]) {
+            forecastMap[day] = {
+              temps: [],
+              icon: item.weather[0].icon
+            };
+          }
+
+          forecastMap[day].temps.push(item.main.temp);
         });
 
-        // Build forecast cards
-let forecastHTML = '';
-let usedDays = new Set();
-let today = moment().format('ddd');
+        // Build forecast cards (limit 5 days)
+        let forecastHTML = '';
+        let dayCount = 0;
 
-data.list.forEach(forecast => {
-  const day = moment(forecast.dt_txt).format('ddd');
+        for (let day in forecastMap) {
+          if (dayCount >= 5) break;
 
-  // Skip today's forecasts
-  if (day === today || usedDays.has(day)) return;
+          const temps = forecastMap[day].temps;
+          const minTemp = Math.min(...temps).toFixed(1);
+          const maxTemp = Math.max(...temps).toFixed(1);
+          const icon = forecastMap[day].icon;
 
-  usedDays.add(day);
+          forecastHTML += `
+            <div class="weather-forecast-item">
+              <div class="day">${day}</div>
+              <img src="https://openweathermap.org/img/wn/${icon}@2x.png" class="w-icon" alt="icon">
+              <div class="temp">Night - ${minTemp}&#176; C</div>
+              <div class="temp">Day - ${maxTemp}&#176; C</div>
+            </div>
+          `;
+          dayCount++;
+        }
 
-  const icon = forecast.weather[0].icon;
-  const nightTemp = forecast.main.temp_min.toFixed(1);
-  const dayTemp = forecast.main.temp_max.toFixed(1);
-
-  forecastHTML += `
-    <div class="weather-forecast-item">
-      <div class="day">${day}</div>
-      <img src="https://openweathermap.org/img/wn/${icon}@2x.png" class="w-icon" alt="icon">
-      <div class="temp">Night - ${nightTemp}&#176; C</div>
-      <div class="temp">Day - ${dayTemp}&#176; C</div>
-    </div>
-  `;
-  
-  if (usedDays.size >= 5) return;
-});
-
-weatherForecastEl.innerHTML = forecastHTML;
-
+        weatherForecastEl.innerHTML = forecastHTML;
       });
   }, (error) => {
     alert("Please enable location to get weather updates.");
